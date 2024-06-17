@@ -19,11 +19,22 @@ const AddTodo = (props) => {
         console.log(item);
     }
 
+    // enterKeyEventHandler 함수
+    const enterKeyEventHandler = (e) => {
+        if (e.key === 'Enter') {
+            onButtonClick();
+        }
+    }
+
     // onInputChange 함수 TextField에 연결
     return (
         <Grid container style={{ margin: 20 }}>
             <Grid xs={11} md={11} item style={{ paddingRight: 16 }}>
-                <TextField placeholder="Add Todo here" fullWidth onChange={ oninputChange } value={item.title}/>
+                <TextField placeholder="Add Todo here" 
+                    fullWidth 
+                    onChange={ oninputChange } 
+                    onKeyPress={ enterKeyEventHandler }
+                    value={item.title}/>
             </Grid>
             <Grid xs={1} md={1} item >
                 <Button fullWidth style={{ height: '100%' }} color="secondary" variant="outlined" onClick={ onButtonClick }>
