@@ -5,14 +5,28 @@ import { Button, Grid, TextField } from "@mui/material"
 const AddTodo = (props) => {
     // 사용자의 입력을 저장할 오브젝트
     const [item, setItem] = useState({ title: "" });
+    const addItem = props.addItem;
 
+    // onButtonClick 함수 작성
+    const onButtonClick = () => {
+        addItem(item); // addItem 함수 사용
+        setItem({ titel: "" });
+    }
+
+    // oninputChange 함수 작성
+    const oninputChange = (e) => {
+        setItem({title: e.target.value});
+        console.log(item);
+    }
+
+    // onInputChange 함수 TextField에 연결
     return (
         <Grid container style={{ margin: 20 }}>
             <Grid xs={11} md={11} item style={{ paddingRight: 16 }}>
-                <TextField placeholder="Add Todo here" fullWidth/>
+                <TextField placeholder="Add Todo here" fullWidth onChange={ oninputChange } value={item.title}/>
             </Grid>
             <Grid xs={1} md={1} item >
-                <Button fullWidth style={{ height: '100%' }} color="secondary" variant="outlined">
+                <Button fullWidth style={{ height: '100%' }} color="secondary" variant="outlined" onClick={ onButtonClick }>
                     +
                 </Button>
             </Grid>
