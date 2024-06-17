@@ -1,25 +1,26 @@
 import './App.css';
 import Todo from './Todo';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, List, Paper } from "@mui/material";
 import AddTodo from './AddTodo';
+import { call } from './service/ApiService';
 
 function App() {
   const [items, setItems] = useState([]);
 
+  useEffect(() => {
+    call("/todo", "GET", null)
+    .then((response) => setItems(response.data));
+  }, []);
+
   const addItem = (item) => {
-    item.id = "ID-" + items.length; // key를 위한 id
-    item.done = false; // done 초기화
-    // 업데이트는 반드시 setitems로 하고 새 배열을 만들어야 한다.
-    setItems([...items, item]);
-    console.log("items : ", items);
-  }
+    call("/todo", "POST", item)
+    .then((response) => setItems(response.data));
+  };
 
   const deleteItem = (item) => {
-    // 삭제할 아이템을 찾는다
-    const newItems = items.filter(e => e.id !== item.id);
-    // 삭제할 아이템을 제외한 아이템을 다시 배열에 저장한다
-    setItems([...newItems]);
+    call("/todo", "DELETE", item)
+    .then((response) => setItems(response.data));
   }
 
   const editItem = () => {
